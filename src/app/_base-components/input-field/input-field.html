@@ -1,0 +1,16 @@
+<div class="d-flex flex-column">
+    @if(label){<label [ngClass]="labelClass" [for]="label">@if(showRequired){<span class="required-asterik">*</span>}{{label}}</label>}
+    <!-- @if(type == ""){ -->
+    <input [type]="" [value]="value" [id]="label" [placeholder]="placeholder" (input)="inputOnChnage($event)">
+    <!-- } -->
+
+    @if(controls && controls.invalid && (controls!.dirty || controls!.touched)){
+    @if(controls.hasError('required')){
+    <mat-error>{{label}} is required..</mat-error>
+    }
+    @if(controls.hasError('email')){
+    <mat-error>Please enter a valid email pattern..</mat-error>
+    }
+    }
+
+</div>

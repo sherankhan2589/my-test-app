@@ -3,21 +3,19 @@
 
     <form action="" class="form mt-3" [formGroup]="_form" (submit)="onSubmit()">
         <div class="row">
-            <div class="col-md-4 d-flex flex-column">
-                <label for="name" class="form-label mb-2 c-pointer"><span class="required-asterik">*</span>Name</label>
-                <input class="form-control" formControlName="name" type="text" name="name" id="name" placeholder="Enter Name">
+            <div class="col-md-4 form-input-field">
+                <app-input-field [type]="'text'" [labelClass]="''" [label]="'Name'" [showRequired]="true" [required]="true" [placeholder]="'Enter Name'" [fieldName]="'name'" formControlName="name"></app-input-field>
             </div>
-            <div class="col-md-4 d-flex flex-column">
-                <label for="email" class="form-label mb-2 c-pointer"><span class="required-asterik">*</span>Email</label>
-                <input class="form-control" formControlName="email" type="email" name="email" id="email" placeholder="Enter Email">
+            <div class="col-md-4 form-input-field">
+                <app-input-field [type]="'email'" [labelClass]="''" [label]="'Email'" [showRequired]="true" [required]="true" [placeholder]="'Enter Email'" [fieldName]="'email'" formControlName="email"></app-input-field>
             </div>
-            <div class="col-md-4 d-flex flex-column">
-                <label for="password" class="form-label mb-2 c-pointer"><span class="required-asterik">*</span>Password</label>
-                <input class="form-control" formControlName="password" type="password" name="password" id="password" placeholder="Enter Password">
+            <div class="col-md-4 form-input-field">
+                <app-input-field [type]="'password'" [labelClass]="''" [label]="'Password'" [showRequired]="true" [required]="true" [placeholder]="'Enter Password'" [fieldName]="'password'" formControlName="password"></app-input-field>
             </div>
         </div>
         <div class="row mt-3 d-flex align-items-center justify-content-center">
-            <button (click)="onSubmit()" [disabled]="_form.invalid" type="button" class="col-md-3 btn btn-dark">Submit</button>
+            <button (click)="onSubmit()" [disabled]="_form.invalid" [ngStyle]="{ 'cursor': _form.invalid ? 'not-allowed' : 'pointer' }"
+                type="button" class="col-md-3 btn-filled">Submit</button>
         </div>
     </form>
 

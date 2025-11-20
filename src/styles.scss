@@ -1,12 +1,749 @@
-/* You can add global styles to this file, and also import other style files */
+// styles.scss
+@use '@angular/material' as mat;
+
+// Include core styles
+@include mat.core();
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-weight: 100;
+  src: url(assets/fonts/Inter/static/Inter_18pt-Thin.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-weight: 200;
+  src: url(assets/fonts/Inter/static/Inter_18pt-ExtraLight.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-weight: 300;
+  src: url(assets/fonts/Inter/static/Inter_18pt-Light.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-weight: 400;
+  src: url(assets/fonts/Inter/static/Inter_18pt-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-weight: 500;
+  src: url(assets/fonts/Inter/static/Inter_18pt-Medium.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-weight: 600;
+  src: url(assets/fonts/Inter/static/Inter_18pt-SemiBold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-weight: 700;
+  src: url(assets/fonts/Inter/static/Inter_18pt-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-weight: 800;
+  src: url(assets/fonts/Inter/static/Inter_18pt-ExtraBold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-weight: 900;
+  src: url(assets/fonts/Inter/static/Inter_18pt-Black.ttf) format('truetype');
+}
+
+// root variables for custom colors
+$bg-light: blueviolet;
+$bg-dark: black;
+$bg-primary: #020b1a;
+$bg-secondary: #f2994a;
+$bg-btn-before: #f2984aef;
+$bg-btn-after: #f2994a;
+$bg-btn-action: #349632;
+$link-color: #0047ff;
+$label-color: #252b36;
+$tertiary-color: #092c4c;
+
+// light theme
+$light-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$violet-palette,
+    ),
+    typography: (
+      brand-family: Inter,
+      plain-family: Inter,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+// dark theme
+$dark-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: mat.$azure-palette,
+      tertiary: mat.$violet-palette,
+    ),
+    typography: (
+      brand-family: Inter,
+      plain-family: Inter,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+// pulse primary theme
+$primary-theme: mat.define-theme(
+  (
+    color: (
+      // theme-type: light,
+      primary: mat.$blue-palette,
+      tertiary: mat.$green-palette,
+    ),
+    typography: (
+      brand-family: Inter,
+      plain-family: Inter,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+// secondary theme
+$secondary-theme: mat.define-theme(
+  (
+    color: (
+      // theme-type: dark,
+      primary: mat.$blue-palette,
+      tertiary: mat.$orange-palette,
+    ),
+    typography: (
+      brand-family: Inter,
+      plain-family: Inter,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+// Apply light theme by default
+html {
+  @include mat.all-component-themes($light-theme);
+  color-scheme: light;
+
+  .top-header {
+    background-color: $bg-light;
+    color: var(--mat-sys-on-surface);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    p,
+    .header-title {
+      color: white;
+    }
+  }
+
+  .side-navigation {
+    background-color: $bg-light;
+    ul {
+      li {
+        background-color: $bg-light;
+        a {
+          color: white;
+          &.active {
+            background-color: #5679a7;
+          }
+        }
+      }
+    }
+    .divider {
+      background-color: #fff;
+    }
+  }
+
+  .btn-filled {
+    background-color: rgba(137, 43, 226, 0.726);
+    &:hover {
+      background-color: $bg-light;
+    }
+  }
+
+  .btn-transparent {
+    background-color: transparent;
+    border: 2px solid rgba(137, 43, 226, 0.726);
+    &:hover {
+      background-color: $bg-light;
+      border: 2px solid $bg-light;
+      color: white;
+    }
+  }
+
+  .modal-header {
+    background-color: $bg-light;
+    color: white;
+  }
+
+  .form-input-field,
+  .form-select-field {
+    label {
+      color: $label-color;
+    }
+  }
+
+  input[type='checkbox'] {
+    border: 2px solid $bg-light;
+  }
+
+  input[type='checkbox']:checked {
+    background-color: $bg-light;
+    border-color: $bg-light;
+  }
+}
+
+// Apply dark theme
+html.dark-theme {
+  @include mat.all-component-themes($dark-theme);
+  color-scheme: dark;
+
+  .container-fluid .container,
+  .content {
+    background-color: white;
+    color: white;
+  }
+
+  .top-header {
+    background-color: $bg-dark;
+    color: var(--mat-sys-on-surface);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    p,
+    .header-title {
+      color: white;
+    }
+  }
+
+  .side-navigation {
+    background-color: $bg-dark;
+    ul {
+      li {
+        background-color: $bg-dark;
+        a {
+          color: white;
+          &.active {
+            background-color: #5679a7;
+          }
+        }
+      }
+    }
+    .divider {
+      background-color: #fff;
+    }
+  }
+
+  .btn-filled {
+    background-color: $bg-dark;
+    &:hover {
+      background-color: $bg-dark;
+    }
+  }
+
+  .btn-transparent {
+    background-color: transparent;
+    border: 2px solid $bg-dark;
+    &:hover {
+      background-color: $bg-dark;
+      border: 2px solid $bg-dark;
+      color: white;
+    }
+  }
+
+  .modal-header {
+    background-color: $bg-dark;
+    color: white;
+  }
+
+  .form-input-field,
+  .form-select-field {
+    label {
+      color: $label-color;
+    }
+  }
+
+  input[type='checkbox'] {
+    border: 2px solid $bg-dark;
+  }
+
+  input[type='checkbox']:checked {
+    background-color: $bg-dark;
+    border-color: $bg-dark;
+  }
+}
+
+// Apply pulse primary theme
+html.primary-theme {
+  @include mat.all-component-themes($primary-theme);
+  color-scheme: #062643;
+
+  .top-header {
+    background-color: $bg-primary;
+    color: var(--mat-sys-on-surface);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    p,
+    .header-title {
+      color: white;
+    }
+  }
+
+  .side-navigation {
+    background-color: $bg-primary;
+    ul {
+      li {
+        background-color: $bg-primary;
+        a {
+          color: white;
+          &.active {
+            background-color: #5679a7;
+          }
+        }
+      }
+    }
+    .divider {
+      background-color: #fff;
+    }
+  }
+
+  .btn-filled {
+    background-color: $bg-btn-before;
+    &:hover {
+      background-color: $bg-btn-after;
+    }
+    &:focus {
+      background-color: $bg-btn-after;
+    }
+  }
+
+  .btn-transparent {
+    background-color: transparent;
+    border: 2px solid $bg-primary;
+    &:hover {
+      background-color: $bg-primary;
+      border: 2px solid $bg-primary;
+      color: white;
+    }
+  }
+
+  .modal-header {
+    background-color: $bg-primary;
+    color: white;
+  }
+
+  .form-input-field,
+  .form-select-field {
+    label {
+      color: $label-color;
+    }
+  }
+
+  input[type='checkbox'] {
+    border: 2px solid $bg-primary;
+  }
+
+  input[type='checkbox']:checked {
+    background-color: $bg-primary;
+    border-color: $bg-primary;
+  }
+}
+
+// Apply secondary theme
+html.secondary-theme {
+  @include mat.all-component-themes($secondary-theme);
+  color-scheme: #f2994a;
+
+  .top-header {
+    background-color: $bg-secondary;
+    color: var(--mat-sys-on-surface);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    p,
+    .header-title {
+      color: white;
+    }
+  }
+
+  .side-navigation {
+    background-color: $bg-secondary;
+    ul {
+      li {
+        background-color: $bg-secondary;
+        a {
+          color: white;
+          &.active {
+            background-color: #5679a7;
+          }
+        }
+      }
+    }
+    .divider {
+      background-color: #fff;
+    }
+  }
+
+  .btn-filled {
+    background-color: $bg-btn-before;
+    &:hover {
+      background-color: $bg-btn-after;
+    }
+    &:focus {
+      background-color: $bg-btn-after;
+    }
+  }
+
+  .btn-transparent {
+    background-color: transparent;
+    border: 2px solid $bg-secondary;
+    &:hover {
+      background-color: $bg-secondary;
+      border: 2px solid $bg-secondary;
+      color: white;
+    }
+  }
+
+  .modal-header {
+    background-color: $bg-secondary;
+    color: white;
+  }
+
+  .form-input-field,
+  .form-select-field {
+    label {
+      color: $label-color;
+    }
+  }
+
+  input[type='checkbox'] {
+    border: 2px solid $bg-secondary;
+  }
+
+  input[type='checkbox']:checked {
+    background-color: $bg-secondary;
+    border-color: $bg-secondary;
+  }
+}
+
+body {
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  margin: 0;
+  font-family: Inter, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+// Smooth transitions for chnanging themes
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+// globl styling
+.container-fluid .container,
+.content {
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+}
+.content {
+  padding: 1rem 1.5rem;
+}
+
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--mat-sys-on-surface);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  span,
+  p,
+  .header-title {
+    color: white;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span.modal-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+  }
+}
+
+.modal-header-transparent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span.modal-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: black;
+  }
+}
+
+.close-modal {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  width: max-content;
+  height: max-content;
+}
+
+.side-navigation {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  ul {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-left: 0;
+    padding: 0 15px;
+    margin-bottom: 0;
+    list-style: none;
+    margin-top: 20px;
+    li {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      flex-direction: column;
+      // margin-bottom: 10px;
+      cursor: pointer;
+      a {
+        width: 100%;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 22px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 22px;
+        color: white;
+        text-decoration: none;
+        p,
+        span {
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 22px;
+          &.activeLink {
+            background-color: #5679a7;
+          }
+        }
+      }
+    }
+  }
+  .divider {
+    background-color: #fff;
+    margin: 0;
+    width: 100%;
+    height: 1px;
+  }
+}
+
+.btn-filled,
+.btn-transparent,
+.btn-action {
+  border-radius: 5px;
+  width: 200px;
+  height: 45px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.btn-filled,
+.btn-action {
+  color: white;
+  outline: none;
+  border: none;
+}
+
+.btn-transparent {
+  color: black;
+}
+
+a {
+  text-decoration: none;
+  color: $link-color;
+  font-weight: 600;
+  &:hover {
+    color: $link-color;
+  }
+}
+
+.form-input-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  justify-content: left;
+  label {
+    color: black;
+    margin-bottom: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  input {
+    width: 100%;
+    line-height: 22px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+}
+
+.form-select-field {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  margin-bottom: 10px;
+  label {
+    color: black;
+    margin-bottom: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  select {
+    width: 100%;
+    line-height: 22px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+}
+.field-required {
+  color: red !important;
+}
+
+input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  margin-top: -5px;
+
+  /* Remove default appearance (for Chrome/Safari) */
+  -webkit-appearance: none;
+  appearance: none;
+
+  /* Background */
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type='checkbox']:checked {
+  position: relative;
+}
+
+/* Add custom tick mark */
+input[type='checkbox']:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+// do not show the inc or decr icons in numner typr input
+/* Chrome, Safari, Edge, Opera */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 .required-asterik {
   color: red;
   font-weight: bolder;
-}
-.form-label {
-  font-weight: 500;
-  cursor: pointer;
-}
-.form-control {
-  border: 1px solid gray;
 }

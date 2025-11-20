@@ -7,7 +7,6 @@ import { Admin } from './_layouts/admin/admin';
 import { AdminModule } from './_modules/admin/admin.module';
 import { SideNavigationComponent } from './_components/side-navigation-component/side-navigation-component';
 import { TopHeaderComponent } from './_components/top-header-component/top-header-component';
-import { ComponentHeader } from './_components/component-header/component-header';
 
 @NgModule({
   declarations: [App, Auth, Admin, SideNavigationComponent, TopHeaderComponent],
