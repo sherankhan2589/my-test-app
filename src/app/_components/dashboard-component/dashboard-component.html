@@ -1,0 +1,24 @@
+<div class="d-flex flex-column">
+    <app-component-header [title]="'Dashboard'" class="w-100"></app-component-header>
+
+    <form action="" class="form mt-3" [formGroup]="_form" (submit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-4 d-flex flex-column">
+                <label for="name" class="form-label mb-2 c-pointer"><span class="required-asterik">*</span>Name</label>
+                <input class="form-control" formControlName="name" type="text" name="name" id="name" placeholder="Enter Name">
+            </div>
+            <div class="col-md-4 d-flex flex-column">
+                <label for="email" class="form-label mb-2 c-pointer"><span class="required-asterik">*</span>Email</label>
+                <input class="form-control" formControlName="email" type="email" name="email" id="email" placeholder="Enter Email">
+            </div>
+            <div class="col-md-4 d-flex flex-column">
+                <label for="password" class="form-label mb-2 c-pointer"><span class="required-asterik">*</span>Password</label>
+                <input class="form-control" formControlName="password" type="password" name="password" id="password" placeholder="Enter Password">
+            </div>
+        </div>
+        <div class="row mt-3 d-flex align-items-center justify-content-center">
+            <button (click)="onSubmit()" [disabled]="_form.invalid" type="button" class="col-md-3 btn btn-dark">Submit</button>
+        </div>
+    </form>
+
+</div>

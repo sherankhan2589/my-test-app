@@ -1,0 +1,23 @@
+ul {
+  list-style: none;
+  padding: 0 15px;
+  margin-top: 50px;
+  width: 100%;
+  li {
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 10px;
+    cursor: pointer;
+    a {
+      text-decoration: none;
+      color: white;
+      font-size: 17px;
+      width: 100%;
+    }
+  }
+}
+.activeLink {
+  a {
+    font-weight: bolder !important;
+  }
+}
