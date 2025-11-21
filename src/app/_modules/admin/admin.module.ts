@@ -9,9 +9,21 @@ import { InputField } from '../../_base-components/input-field/input-field';
 import { ModalHeader } from '../../_base-components/modal-header/modal-header';
 import { SelectField } from '../../_base-components/select-field/select-field';
 import { DatatableListing } from '../../_base-components/datatable-listing/datatable-listing';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import {
+  MatDatepicker,
+  MatDatepickerActions,
+  MatDatepickerModule,
+  MatDateRangeInput,
+  MatDateRangePicker,
+} from '@angular/material/datepicker';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatColumnDef, MatTable } from '@angular/material/table';
+import { MatIcon } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -30,6 +42,20 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatDateRangeInput,
+    MatDatepicker,
+    MatDatepickerActions,
+    MatDateRangePicker,
+    MatInput,
+    MatFormField,
+    MatDatepickerModule,
+    MatDateRangeInput,
+    MatCheckbox,
+    MatPaginator,
+    MatProgressBar,
+    MatTable,
+    MatIcon,
+    MatColumnDef,
   ],
 })
 export class AdminModule {}

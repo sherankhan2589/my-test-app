@@ -1,1 +1,44 @@
-<p>select-field works!</p>
+<div class="d-flex flex-column">
+    @if(label){
+    <label [ngClass]="labelClass" class="form-label">@if(showRequired){<span class="field-required">*</span>}{{label}} </label>
+    }
+    <mat-select
+        [multiple]="isMultiSelect"
+        class="form-control"
+        [placeholder]="placeholder"
+        (keydown)="handleKeydown($event)"
+        [(value)]="selectedValues"
+        [disabled]="disabled || readOnly"
+        (blur)="markAsTouched()"
+        [compareWith]="compareWithFn"
+        (selectionChange)="onSelectionChange($event.value)"
+        #pageFormSelect>
+
+        @if(isEnabledSearch){
+        <ng-container>
+            <input type="text" placeholder="Search..." [formControl]="filterControl" (keydown)="handleKeydown($event)" (click)="$event.stopPropagation()" class="search-input" />
+            @if(enableSelectAll){ <mat-checkbox [value]="'true'" [formControl]="selectAllControl">Select All</mat-checkbox>}
+        </ng-container>
+        }
+
+        @for(item of filteredOptions; track item.id; let i = $index){
+        <mat-option [value]="item.id">
+            {{ item.name }}
+        </mat-option>
+        }
+
+        @if(filteredOptions.length === 0){
+        <mat-option *ngIf="filteredOptions.length === 0" disabled> No results found </mat-option>
+        }
+    </mat-select>
+
+    @if(control && control.invalid && (control.dirty || control.touched)){
+    <ng-container>
+        @if(control.hasError('required')){
+        <mat-error>
+            {{ label }} is required.
+        </mat-error>
+        }
+    </ng-container>
+    }
+</div>

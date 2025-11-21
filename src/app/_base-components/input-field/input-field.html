@@ -1,15 +1,95 @@
 <div class="d-flex flex-column">
-    @if(label){<label [ngClass]="labelClass" [for]="label">@if(showRequired){<span class="required-asterik">*</span>}{{label}}</label>}
-    <!-- @if(type == ""){ -->
-    <input [type]="" [value]="value" [id]="label" [placeholder]="placeholder" (input)="inputOnChnage($event)">
-    <!-- } -->
+    @if(label && type !== 'checkbox' && type !== 'radio'){<label [ngClass]="labelClass" [for]="label">@if(showRequired){<span class="required-asterik">*</span>}{{label}}</label>}
 
-    @if(controls && controls.invalid && (controls!.dirty || controls!.touched)){
-    @if(controls.hasError('required')){
-    <mat-error>{{label}} is required..</mat-error>
+    @if(type == 'date'){
+    <div class="d-flex">
+        <mat-form-field>
+            <input matInput [matDatepicker]="datepicker" (dateInput)="onInputChangeMatDate($event)" />
+            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker>
+                <mat-datepicker-actions>
+                    <button matButton matDatepickerCancel>Cancel</button>
+                    <button matButton="elevated" matDatepickerApply>Apply</button>
+                </mat-datepicker-actions>
+            </mat-datepicker>
+            @if(showPickerHint){
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            }
+        </mat-form-field>
+    </div>
     }
-    @if(controls.hasError('email')){
-    <mat-error>Please enter a valid email pattern..</mat-error>
+
+    @if(type == 'datePicker'){
+    <div class="d-flex">
+        <mat-form-field appearance="fill" hideRequiredMarker="true" subscriptSizing="dynamic">
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" [value]="dateRangeValues.start"
+                    (dateChange)="onInputChangeMatDatePicker($event, 'start')">
+                <input matEndDate placeholder="End date" [value]="dateRangeValues.end"
+                    (dateChange)="onInputChangeMatDatePicker($event, 'end')">
+            </mat-date-range-input>
+            @if(showPickerHint){
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            }
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+    </div>
+    }
+
+    @if(type == 'dateTimePicker'){
+    <div class="d-flex">
+        <input
+            class="form-control"
+            type="datetime-local"
+            [placeholder]="placeholder"
+            [formControl]="control"
+            (input)="onInputChangeDateTime($event)" />
+    </div>
+    }
+
+    @if(type == 'checkbox'){
+    <div class="d-flex align-items-center justify-content-start gap-1">
+        <input type="checkbox" [id]="fieldName" [checked]="control.value" [formControl]="control"
+            (change)="onCheckboxChange($event)">
+        <label class="label mb-0" [for]="fieldName" [ngClass]="labelClass">{{label}}</label>
+    </div>
+    }
+
+    @if(type == 'radio'){
+    <div class="d-flex align-items-center justify-content-start gap-1">
+        <input type="radio" [id]="fieldName + '-' + radioValue" [value]="radioValue" [checked]="control.value === radioValue"
+            (change)="onRadioChange($event)">
+        <label class="label" [for]="fieldName + '-' + radioValue" [ngClass]="labelClass">
+            {{ label }}
+        </label>
+    </div>
+    }
+
+    @if(type !== 'checkbox' && type !== 'radio' && type !== 'dateTimePicker'){
+    <input [type]="type" [value]="value" [id]="label" [placeholder]="placeholder" (input)="inputOnChnage($event)">
+    }
+
+    @if(control && control.invalid && (control.dirty || control.touched)){
+    @if(control.hasError('required')){
+    <mat-error>
+        {{ label }} is required.
+    </mat-error>
+    }
+    @if(control.hasError('email')){
+    <mat-error>
+        Please enter a valid email address.
+    </mat-error>
+    }
+    @if(control.hasError('minlength')){
+    <mat-error>
+        Minimum length is {{ control.getError('minlength').requiredLength }} characters.
+    </mat-error>
+    }
+    @if(control.hasError('maxlength')){
+    <mat-error>
+        Maximum length is {{ control.getError('maxlength').requiredLength }} characters.
+    </mat-error>
     }
     }
 

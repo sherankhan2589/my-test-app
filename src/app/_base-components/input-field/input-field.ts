@@ -1,4 +1,14 @@
-import { Component, forwardRef, Host, Input, Optional, signal, SkipSelf } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  Host,
+  Input,
+  Optional,
+  Output,
+  signal,
+  SkipSelf,
+} from '@angular/core';
 import {
   FormControl,
   ControlContainer,
@@ -10,6 +20,8 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+import { DateRangeValues } from '../../_models/base-model';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-input-field',
@@ -38,14 +50,19 @@ export class InputField implements ControlValueAccessor, Validator {
   @Input() placeholder: string = '';
   @Input() minLength: number = 3;
   @Input() maxLength: number = 5;
+  @Input() radioValue: any;
+  @Input() error: string = '';
+  @Input() validationMessage: string = '';
+  @Input() apiErrors: any = {};
+  @Input() dateRangeValues: DateRangeValues = { start: null, end: null };
+  @Input() showError: boolean = false;
   @Input() required: boolean = false;
   @Input() showRequired: boolean = false;
   @Input() readOnly: boolean = false;
-  @Input() error: string = '';
-  @Input() showErrors: boolean = false;
-  @Input() validationMessage: string = '';
+  @Input() showPickerHint: boolean = true;
+  @Output() change = new EventEmitter<any>();
 
-  controls!: FormControl;
+  control!: FormControl;
   value: any;
   touched = signal<boolean>(false);
   disabled = signal<boolean>(false);
@@ -63,12 +80,13 @@ export class InputField implements ControlValueAccessor, Validator {
     this.onTouched = fn;
   }
 
-  writeValue(obj: any): void {
-    this.value = obj;
+  validate(control: FormControl): ValidationErrors | null {
+    this.control = control;
+    return null;
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
-    return null;
+  writeValue(value: any): void {
+    this.value = value;
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -82,12 +100,57 @@ export class InputField implements ControlValueAccessor, Validator {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.controlContainer && this.fieldName) {
+      this.control = this.controlContainer.control?.get(this.fieldName) as FormControl;
+    }
+  }
 
   inputOnChnage(event: Event): void {
     const inputValue = event.target as HTMLInputElement;
     this.value = inputValue.value;
     this.onChange(this.value);
+    this.markAsTouched();
+  }
+
+  onInputChangeMatDate(event: MatDatepickerInputEvent<Date>): void {
+    this.value.set(event.value);
+    this.onChange(this.value);
+    this.markAsTouched();
+  }
+
+  onInputChangeDateTime(event: any) {
+    const value = event.target.value;
+    const date = new Date(value);
+    const formattedDate = date.toLocaleDateString('en-GB', { hour12: true });
+  }
+
+  onInputChangeMatDatePicker(
+    event: MatDatepickerInputEvent<Date>,
+    inputType: string = 'start'
+  ): void {
+    if (inputType === 'start') {
+      this.dateRangeValues.start = event.value;
+      this.dateRangeValues.end = null;
+    } else {
+      this.dateRangeValues.end = event.value;
+      this.value.set(event.value);
+      if (event.value != null) {
+        this.change.emit(this.dateRangeValues);
+      }
+      this.onChange(this.value);
+      this.markAsTouched();
+    }
+  }
+
+  onCheckboxChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.control?.setValue(input.checked);
+    this.markAsTouched();
+  }
+  onRadioChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.control?.setValue(input.value);
     this.markAsTouched();
   }
 }

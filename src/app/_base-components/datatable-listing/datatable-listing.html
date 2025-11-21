@@ -1,1 +1,52 @@
-<p>datatable-listing works!</p>
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1 w-100">
+
+    <!--header columns -->
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ column | titlecase }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+            {{ row[column] }}
+        </td>
+    </ng-container>
+
+    <!--filter columns -->
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column + '_filter'">
+        <th mat-header-cell *matHeaderCellDef>
+            <input
+                *ngIf="column !== 'actions'"
+                type="text"
+                class="column-filter form-control"
+                placeholder="Search {{ column | titlecase }}"
+                (keyup)="onFilterChange(column, $event.target.value)" />
+        </th>
+    </ng-container>
+
+    <!--Actions Column -->
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="showForm(row)">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="filterColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+</table>
+
+<!--Pagination -->
+<mat-paginator
+    [length]="dataSource?.totalItems || 0"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    showFirstLastButtons>
+</mat-paginator>
+
+<!-- Loading indicator -->
+<div *ngIf="dataSource?.loading$ | async" class="mt-2">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
