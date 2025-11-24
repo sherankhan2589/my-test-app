@@ -22,8 +22,20 @@ import {
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatProgressBar } from '@angular/material/progress-bar';
-import { MatColumnDef, MatTable } from '@angular/material/table';
+import {
+  MatCell,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef,
+  MatTable,
+} from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatSortHeader, MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -56,6 +68,16 @@ import { MatIcon } from '@angular/material/icon';
     MatTable,
     MatIcon,
     MatColumnDef,
+    HttpClientModule,
+    MatHeaderRowDef,
+    MatHeaderCellDef,
+    MatRowDef,
+    MatSortHeader,
+    MatSortModule,
+    MatHeaderRow,
+    MatRow,
+    MatCell,
+    MatHeaderCell,
   ],
 })
 export class AdminModule {}

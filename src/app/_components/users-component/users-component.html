@@ -1,1 +1,9 @@
-<p>users-component works!</p>
+<div class="d-flex">
+    <app-datatable-listing
+        [dataSource]="dataSource "
+        [filterColumns]="filterColumns"
+        [displayedColumns]="displayedColumns"
+        (showFormEvent)="onShowForm($event)"
+        (filterChnage)="onFilterChange($event)">
+    </app-datatable-listing>
+</div>
