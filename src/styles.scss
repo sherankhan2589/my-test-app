@@ -195,6 +195,10 @@ html {
     }
   }
 
+  .title {
+    color: $bg-light;
+  }
+
   .side-navigation {
     background-color: $bg-light;
     ul {
@@ -261,6 +265,10 @@ html.dark-theme {
   .content {
     background-color: white;
     color: white;
+  }
+
+  .title {
+    color: $bg-dark;
   }
 
   .top-header {
@@ -359,6 +367,10 @@ html.primary-theme {
     }
   }
 
+  .title {
+    color: $bg-primary;
+  }
+
   .side-navigation {
     background-color: $bg-primary;
     ul {
@@ -367,7 +379,7 @@ html.primary-theme {
         a {
           color: white;
           &.active {
-            background-color: #5679a7;
+            background-color: gray;
           }
         }
       }
@@ -439,6 +451,10 @@ html.secondary-theme {
     .header-title {
       color: white;
     }
+  }
+
+  .title {
+    color: $bg-secondary;
   }
 
   .side-navigation {
