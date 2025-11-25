@@ -36,14 +36,14 @@ export class UserDataSource extends BaseDataSource implements DataSource<Users> 
     );
     observable
       .pipe(
-        catchError(() => of({ Users: [] })),
+        catchError(() => of({ users: [] })),
         finalize(() => this.loadingSubject.next(false))
       )
       .subscribe((d: any) => {
         this.totalItems = d.total;
         this.data = d.users;
-        console.log(d.users);
-        return this.datasourceSubject.next(d.users || []);
+        console.log(d);
+        return this.datasourceSubject.next(d.users);
       });
 
     return observable;

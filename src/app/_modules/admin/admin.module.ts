@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
-import { UsersComponent } from '../../_components/users-component/users-component';
 import { DashboardComponent } from '../../_components/dashboard-component/dashboard-component';
 import { ComponentHeader } from '../../_components/component-header/component-header';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +19,7 @@ import {
   MatDateRangePicker,
 } from '@angular/material/datepicker';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import {
   MatCell,
@@ -34,12 +33,14 @@ import {
   MatTable,
 } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatSortHeader, MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UserComponent } from '../../_components/users-component/users-component';
 
 @NgModule({
   declarations: [
-    UsersComponent,
+    UserComponent,
     DashboardComponent,
     ComponentHeader,
     InputField,
@@ -78,6 +79,8 @@ import { MatSortHeader, MatSortModule } from '@angular/material/sort';
     MatRow,
     MatCell,
     MatHeaderCell,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class AdminModule {}

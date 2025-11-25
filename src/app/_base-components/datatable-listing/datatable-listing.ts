@@ -20,14 +20,8 @@ export class DatatableListing {
   @Output() sortChange = new EventEmitter<any>();
 
   ngAfterViewInit() {
-    console.warn(this.dataSource);
-
-    if (this.sort) {
-      this.sort.sortChange.subscribe((sort) => this.sortChange.emit(sort));
-    }
-    if (this.paginator) {
-      this.paginator.page.subscribe((page) => this.pageChange.emit(page));
-    }
+    this.sort.sortChange.subscribe((sort) => this.sortChange.emit(sort));
+    this.paginator.page.subscribe((page) => this.pageChange.emit(page));
   }
 
   showForm(list: any) {
