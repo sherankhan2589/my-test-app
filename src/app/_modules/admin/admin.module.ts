@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { DashboardComponent } from '../../_components/dashboard-component/dashboard-component';
 import { ComponentHeader } from '../../_components/component-header/component-header';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputField } from '../../_base-components/input-field/input-field';
 import { ModalHeader } from '../../_base-components/modal-header/modal-header';
 import { SelectField } from '../../_base-components/select-field/select-field';
@@ -18,9 +18,9 @@ import {
   MatDateRangeInput,
   MatDateRangePicker,
 } from '@angular/material/datepicker';
-import { MatCheckbox } from '@angular/material/checkbox';
+import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatProgressBar, MatProgressBarModule } from '@angular/material/progress-bar';
 import {
   MatCell,
   MatColumnDef,
@@ -31,12 +31,15 @@ import {
   MatRow,
   MatRowDef,
   MatTable,
+  MatTableModule,
 } from '@angular/material/table';
-import { MatIcon } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSortHeader, MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserComponent } from '../../_components/users-component/users-component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from '../../app-routing-module';
 
 @NgModule({
   declarations: [
@@ -81,6 +84,14 @@ import { UserComponent } from '../../_components/users-component/users-component
     MatHeaderCell,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatProgressBarModule,
+    MatTableModule,
   ],
 })
 export class AdminModule {}
