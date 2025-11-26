@@ -17,7 +17,6 @@ import {
   NG_VALUE_ACCESSOR,
   NG_VALIDATORS,
   FormGroupDirective,
-  AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
 import { DateRangeValues } from '../../_models/base-model';
@@ -61,6 +60,7 @@ export class InputField implements ControlValueAccessor, Validator {
   @Input() readOnly: boolean = false;
   @Input() showPickerHint: boolean = true;
   @Output() change = new EventEmitter<any>();
+  @Output() keyupEvent = new EventEmitter<string>();
 
   control!: FormControl;
   value: any;
@@ -111,6 +111,11 @@ export class InputField implements ControlValueAccessor, Validator {
     this.value = inputValue.value;
     this.onChange(this.value);
     this.markAsTouched();
+  }
+
+  onKeyUp(event: KeyboardEvent) {
+    const value = (event.target as HTMLInputElement).value;
+    this.keyupEvent.emit(value);
   }
 
   onInputChangeMatDate(event: MatDatepickerInputEvent<Date>): void {

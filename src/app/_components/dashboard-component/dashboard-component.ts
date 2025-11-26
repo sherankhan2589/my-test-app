@@ -17,9 +17,9 @@ export class DashboardComponent {
   });
 
   onSubmit() {
-    this.formData.update((res) => (res = this._form.value));
+    this.formData.set(this._form.value);
     this._form.reset();
-    console.warn(this.formData());
+    console.log(this.formData());
   }
 
   // numberOnly(event: any) {

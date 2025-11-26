@@ -1,5 +1,5 @@
 <div class="d-flex flex-column">
-    @if(label && type !== 'checkbox' && type !== 'radio'){<label [ngClass]="labelClass" [for]="label">@if(showRequired){<span class="required-asterik">*</span>}{{label}}</label>}
+    @if(label && type !== 'checkbox' && type !== 'radio'){<label [ngClass]="labelClass || {'invalid-label': control.invalid && (control.touched || control.dirty)}" [for]="label">@if(showRequired){<span class="required-asterik">*</span>}{{label}}</label>}
 
     @if(type == 'date'){
     <div class="d-flex">
@@ -67,28 +67,30 @@
     }
 
     @if(type !== 'checkbox' && type !== 'radio' && type !== 'dateTimePicker'){
-    <input [type]="type" [value]="value" [id]="label" [placeholder]="placeholder" (input)="inputOnChnage($event)">
+    <input [type]="type" (blur)="markAsTouched()" [ngClass]="{
+    'invalid-input': control.invalid && (control.touched || control.dirty)
+  }" [value]="value" [id]="label" [placeholder]="placeholder" (keyup)="onKeyUp($event)" (input)="inputOnChnage($event)">
     }
 
     @if(control && control.invalid && (control.dirty || control.touched)){
     @if(control.hasError('required')){
     <mat-error>
-        {{ label }} is required.
+        <span class="text-danger"> {{ label }} is required.</span>
     </mat-error>
     }
     @if(control.hasError('email')){
     <mat-error>
-        Please enter a valid email address.
+        <span class="text-danger">Please enter a valid email address.</span>
     </mat-error>
     }
     @if(control.hasError('minlength')){
     <mat-error>
-        Minimum length is {{ control.getError('minlength').requiredLength }} characters.
+        <span class="text-danger">Minimum length is {{ control.getError('minlength').requiredLength }} characters.</span>
     </mat-error>
     }
     @if(control.hasError('maxlength')){
     <mat-error>
-        Maximum length is {{ control.getError('maxlength').requiredLength }} characters.
+        <span class="text-danger">Maximum length is {{ control.getError('maxlength').requiredLength }} characters.</span>
     </mat-error>
     }
     }

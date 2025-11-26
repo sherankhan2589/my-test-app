@@ -1,52 +1,56 @@
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1 w-100">
 
-    <!--header columns -->
-    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ column | titlecase }}
+    <!-- header & row cells -->
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="{{column.name}}" [disabled]="column.name === 'action'">
+            {{ column.title === 'action' ? 'Actions' : (column.title | titlecase) }}
         </th>
         <td mat-cell *matCellDef="let row">
-            {{ row[column] }}
-        </td>
-    </ng-container>
-
-    <!--filter columns -->
-    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column + '_filter'">
-        <th mat-header-cell *matHeaderCellDef>
-            <input
-                *ngIf="column !== 'actions'"
-                type="text"
-                class="column-filter form-control"
-                placeholder="Search {{ column | titlecase }}"
-                (keyup)="onFilterChange(column, $event.target.value)" />
-        </th>
-    </ng-container>
-
-    <!--Actions Column -->
-    <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let row">
-            <button mat-icon-button color="primary" (click)="showForm(row)">
+            @if(column.type === 'edit'){
+            <button class="border-0 bg-transparent" (click)="showForm(row)">
                 <mat-icon>edit</mat-icon>
             </button>
+            }
+            @else if(column.type === 'link'){
+            <a href="javascript: void(0)" class="text-primary text-decoration-underline" (click)="onClickLink(row)">{{ row[column.name] }}</a>
+            }
+            @else {
+            {{ row[column.name] }}
+            }
         </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <!-- Filter row -->
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.name + '_filter'">
+        <th mat-header-cell *matHeaderCellDef>
+            <ng-container *ngIf="column.name !== 'action'">
+                <input *ngIf="column.type !== 'select'" type="{{ column.type }}" class="form-control"
+                    [placeholder]="'Search ' + column.title"
+                    (keyup)="onFilterChange(column.name, $event.target.value)" />
+                <select *ngIf="column.type === 'select'" class="form-select" #filterSelect
+                    (change)="onFilterChange(column.name, filterSelect.value)">
+                    <option value="">All</option>
+                    <option *ngFor="let option of column.options" [value]="option">{{ option }}</option>
+                </select>
+            </ng-container>
+        </th>
+    </ng-container>
+
+    <!-- Header & row  -->
+    <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
     <tr mat-header-row *matHeaderRowDef="filterColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnNames"></tr>
 
 </table>
 
-<!--Pagination -->
-<mat-paginator
-    [length]="dataSource?.totalItems || 0"
-    [pageSize]="10"
-    [pageSizeOptions]="[10, 25, 50, 100]"
-    showFirstLastButtons>
-</mat-paginator>
-
-<!-- Loading indicator -->
+<!-- Loading -->
 <div *ngIf="dataSource?.loading$ | async" class="mt-2">
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
+
+<!-- Pagination -->
+<mat-paginator [length]="dataSource?.totalItems || 0"
+    [pageSize]="10"
+    [pageSizeOptions]="[10,25,50,100]"
+    showFirstLastButtons>
+</mat-paginator>

@@ -709,7 +709,7 @@ a {
   label {
     color: black;
     margin-bottom: 5px;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
   }
   input {
@@ -721,7 +721,17 @@ a {
     font-size: 16px;
   }
 }
+.invalid-input {
+  border: 1px solid red !important;
+}
 
+.invalid-label {
+  font-weight: 600 !important;
+  color: red !important;
+}
+.text-danger {
+  color: red !important;
+}
 .form-select-field {
   display: flex;
   justify-content: left;
@@ -730,7 +740,7 @@ a {
   label {
     color: black;
     margin-bottom: 5px;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
   }
   select {

@@ -10,14 +10,20 @@ import { MatSort } from '@angular/material/sort';
 })
 export class DatatableListing {
   @Input() dataSource!: any;
-  @Input() displayedColumns!: string[];
-  @Input() filterColumns!: string[];
+  @Input() displayedColumns!: { title: string; name: string; type: string; options?: string[] }[];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @Output() showFormEvent = new EventEmitter<any>();
   @Output() filterChnage = new EventEmitter<any>();
   @Output() pageChange = new EventEmitter<any>();
   @Output() sortChange = new EventEmitter<any>();
+  columnNames: string[] = [];
+  filterColumns: string[] = [];
+
+  ngOnInit() {
+    this.columnNames = this.displayedColumns.map((col) => col.name);
+    this.filterColumns = this.displayedColumns.map((col) => col.name + '_filter');
+  }
 
   ngAfterViewInit() {
     this.sort.sortChange.subscribe((sort) => this.sortChange.emit(sort));
@@ -25,8 +31,8 @@ export class DatatableListing {
   }
 
   showForm(list: any) {
-    console.log(list);
     this.showFormEvent.emit({ ...list });
+    console.log(list);
   }
 
   onFilterChange(column: string, value: string) {
@@ -39,5 +45,8 @@ export class DatatableListing {
     this.displayedColumns = this.displayedColumns.map((item: any) => {
       return item.name;
     });
+  }
+  onClickLink(row: any) {
+    console.log('Link clicked:', row);
   }
 }

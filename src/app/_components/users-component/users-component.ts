@@ -12,9 +12,20 @@ import { UsersService } from '../../_services/users.service';
 })
 export class UserComponent implements OnInit {
   dataSource!: UserDataSource;
-  displayedColumns = ['firstName', 'email', 'role'];
-  // filterColumns = ['nameFilter', 'emailFilter', 'roleFilter'];
-  filterColumns = this.displayedColumns.map((col) => col + '_filter');
+  displayedColumns = [
+    { title: 'Name', name: 'firstName', type: 'text' },
+    { title: 'Email', name: 'email', type: 'email' },
+    { title: 'DOB', name: 'birthDate', type: 'link' },
+    { title: 'Role', name: 'role', type: 'select', options: ['Admin', 'User', 'Guest'] },
+    { title: 'Actions', name: 'action', type: 'edit' },
+  ];
+  get columnNames() {
+    return this.displayedColumns.map((col) => col.name);
+  }
+
+  get filterColumns() {
+    return this.displayedColumns.map((col) => col.name + '_filter');
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
