@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
@@ -10,7 +11,14 @@ import { MatSort } from '@angular/material/sort';
 })
 export class DatatableListing {
   @Input() dataSource!: any;
-  @Input() displayedColumns!: { title: string; name: string; type: string; options?: string[] }[];
+  @Input() displayedColumns!: {
+    title: string;
+    name: string;
+    type: string;
+    sortable?: boolean;
+    options?: string[];
+  }[];
+  @Input() filterColumns!: string[];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @Output() showFormEvent = new EventEmitter<any>();
@@ -18,11 +26,9 @@ export class DatatableListing {
   @Output() pageChange = new EventEmitter<any>();
   @Output() sortChange = new EventEmitter<any>();
   columnNames: string[] = [];
-  filterColumns: string[] = [];
-
+  selectedValue!: string;
   ngOnInit() {
     this.columnNames = this.displayedColumns.map((col) => col.name);
-    this.filterColumns = this.displayedColumns.map((col) => col.name + '_filter');
   }
 
   ngAfterViewInit() {

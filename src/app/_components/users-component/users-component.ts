@@ -11,26 +11,23 @@ import { UsersService } from '../../_services/users.service';
   styleUrl: './users-component.scss',
 })
 export class UserComponent implements OnInit {
-  dataSource!: UserDataSource;
-  displayedColumns = [
-    { title: 'Name', name: 'firstName', type: 'text' },
-    { title: 'Email', name: 'email', type: 'email' },
-    { title: 'DOB', name: 'birthDate', type: 'link' },
-    { title: 'Role', name: 'role', type: 'select', options: ['Admin', 'User', 'Guest'] },
-    { title: 'Actions', name: 'action', type: 'edit' },
-  ];
-  get columnNames() {
-    return this.displayedColumns.map((col) => col.name);
-  }
-
-  get filterColumns() {
-    return this.displayedColumns.map((col) => col.name + '_filter');
-  }
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private userService: UsersService) {}
+
+  dataSource!: UserDataSource;
+  optionsData: string[] = ['Admin', 'User', 'Agent'];
+
+  displayedColumns = [
+    { title: 'Name', name: 'firstName', type: 'text', sortable: true },
+    { title: 'Email', name: 'email', type: 'email', sortable: true },
+    { title: 'DOB', name: 'birthDate', type: 'link', sortable: true },
+    { title: 'Role', name: 'role', type: 'select', options: this.optionsData, sortable: true },
+    { title: 'Actions', name: 'action', type: 'edit', sortable: false },
+  ];
+
+  filterColumns = this.displayedColumns.map((col) => col.name + '_filter');
 
   ngOnInit() {
     this.dataSource = new UserDataSource(this.userService);
@@ -48,5 +45,9 @@ export class UserComponent implements OnInit {
 
   onShowForm(item: any) {
     console.log('Edit clicked:', item);
+  }
+
+  get columnNames() {
+    return this.displayedColumns.map((col) => col.name);
   }
 }
